@@ -13,6 +13,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -21,14 +23,17 @@ import java.util.List;
 public class EventList {
     List <Event> list = new <Event> ArrayList();
     List<String> list2= new<String>ArrayList();
+   
     public void rt(String x, String y, String z){
+
+        File f = new File("C:\\Users\\hgrove17\\Documents\\GitHub\\ClintonsDesktop\\PR3_3.1\\src\\pr3_3\\pkg1\\text.txt");
+try {
     Event date = new Event();
     date.date=x;
     date.location=y;
     date.event=z;
     list.add(date);
-        File f = new File("C:\\Users\\Clinton\\Documents\\NetBeansProjects\\PR3_3.1\\src\\pr3_3\\pkg1\\text.txt");
-try {
+    System.out.println("added");
 BufferedWriter wrtr = new BufferedWriter(new FileWriter(f));
 for (int i = 0; i<list.size();i++){
         String a= list.get(i).date;
@@ -37,22 +42,40 @@ for (int i = 0; i<list.size();i++){
 wrtr.write(a+ " "+b+" "+c);
 wrtr.newLine();
 System.out.println(a+ " "+b+" "+c);
-wrtr.close();
-}}
+
+}wrtr.close();
+}
 catch (Exception ex) {
-System.out.println("I was hoping that we wouldn't get here.");
+System.out.println("I was hoping that we wouldn't get here2.");
 }
     }
+    
     public String rd(){
-File f = new File("C:\\Users\\Clinton\\Documents\\NetBeansProjects\\PR3_3.1\\src\\pr3_3\\pkg1\\text.txt");
+        
+File f = new File("C:\\Users\\hgrove17\\Documents\\GitHub\\ClintonsDesktop\\PR3_3.1\\src\\pr3_3\\pkg1\\text.txt");
 try {
-BufferedReader rdr = new BufferedReader(new FileReader(f));
-String line;
-while ((line = rdr.readLine()) != null)
-    list2.add(line);
+    list.clear(); list2.clear();
+    BufferedReader rdr = new BufferedReader(new FileReader(f));
+    String line;
+    while ((line = rdr.readLine())!= null){
+    Pattern p = Pattern.compile(" ");
+    Matcher m = p.matcher(line.substring(11));    
+        m.find();
+        Event e = new Event();
+        list2.add(line);
+        e.date=line.substring(0,10);
+        e.location= line.substring(11,m.start()+11);
+        e.event=line.substring(m.start()+12);
+        
+        System.out.println(e.event);
+        System.out.println(e.location);
+        System.out.println(e.date);
+        list.add(e);
+        System.out.println("added");
+        
+        
     
-    
-}
+    }}
 catch (Exception ex) {
 System.out.println("I was hoping that we wouldn't get here.");
 }

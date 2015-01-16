@@ -147,6 +147,8 @@ jButton1.addActionListener(new ActionListener() {
         jTextField2.setText(u);
         jTextField3.setText(u);
         
+        jTextPane1.setText(x.rd());  
+        
 }
 });
     }//GEN-LAST:event_jButton2ActionPerformed
